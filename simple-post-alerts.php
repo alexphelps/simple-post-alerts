@@ -39,7 +39,7 @@ function spa_save_settings($user_id) {
 add_action('personal_options_update', 'spa_save_settings');
 add_action('edit_user_profile_update', 'spa_save_settings');
 
-//for subscriber with meta data spa_pending_review = yes & post status = pending review -> send email
+//for user with meta data spa_pending_review = yes & post status = pending review -> send email
 function spa_pending_review_send( $post_id ){
   if ( get_post_status( $post_id ) == 'pending' ) {
     $spa_pending_review_subscribers = get_users( array( 'meta_key' => 'spa_pending_review', 'meta_value' => 'yes' ) );
@@ -50,14 +50,14 @@ function spa_pending_review_send( $post_id ){
         $message .= "There is a new post pending review on your website.\n\n";
         $message .= $post_title . "\n\n";
         $message .= get_edit_post_link( $post_id, '' );
-        // Send email to suscriber.
+        // Send email to user.
         wp_mail( $user->user_email, $subject, $message );
       }
     }
 }
 add_action('pending_post', 'spa_pending_review_send');
 
-//for use with meta data spa_published & post status = published -> send email
+//for user with meta data spa_published = yes & post status = published -> send email
 function spa_published_send( $post_id ){
   if ( get_post_status( $post_id ) == 'publish' ) {
     $spa_published_subscribers = get_users( array( 'meta_key' => 'spa_published', 'meta_value' => 'yes' ) );
@@ -68,7 +68,7 @@ function spa_published_send( $post_id ){
         $message .= "There is a new post published on your website.\n\n";
         $message .= $post_title . "\n\n";
         $message .= $post_url;
-        // Send email to suscriber.
+        // Send email to user.
         wp_mail( $user->user_email, $subject, $message );
       }
     }
