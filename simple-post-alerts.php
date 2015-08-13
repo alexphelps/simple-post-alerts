@@ -8,7 +8,6 @@ Author: Alex Phelps
 Author URI: http://www.alexphelps.me/
 */
 
-//setup user profile options
 function spa_show_settings( $user ) {
   if (esc_attr( get_the_author_meta( "spa_pending_review", $user->ID )) == "yes"){
     $check_spa_pending_review = "checked";
